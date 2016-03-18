@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue Component</title>
+    <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,600|Roboto Mono" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Dosis:300,500&amp;text=Vue.js" rel="stylesheet" type="text/css">
+    <link href="//cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="http://vuejs.org/css/page.css" type="text/css">
+</head>
+<body>
+<div id="mobile-bar">
+    <a class="menu-button"></a>
+    <a class="logo" href="."></a>
+</div>
+<div id="header">
+    <a id="logo" href="/">
+        <img src="http://vuejs.org/images/logo.png">
+        <span>Vue Component</span>
+    </a>
+</div>
+<div id="main">
+    <div class="sidebar">
+        <div class="list">
+            <h2>Examples</h2>
+            <ul class="menu-root">
+                <li>
+                    <a href="#treeview" class="sidebar-link">Treeview</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content guide with-sidebar">
+        <h1>Examples</h1>
+        <h2 id="treeview">Treeview</h2>
+        <h3>Default:</h3>
+        <treeview :model="tree"></treeview>
+        <h3>Custom:</h3>
+        <input-treeview :model="tree"></input-treeview>
+        <p>Define your own treeview by extend, and you could do almost everything.</p>
+        <p> For details, see:
+        <ul>
+            <li><code>/examples/treeview/input-treeview.vue</code></li>
+            <li><code>/examples/treeview/input-treeview-item.vue</code></li>
+        </ul>
+        </p>
+    </div>
+</div>
+<script src="/index-bundle.js"></script>
+</body>
+</html>
