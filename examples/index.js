@@ -12,27 +12,34 @@ new Vue({
         tree: {
             children: [
                 {
-                    name: 'child 1',
+                    name: 'parent 1',
                     children: [
-                        {name: 'a'},
-                        {name: 'b'}
+                        {
+                            name: 'child a',
+                            children: [{
+                                name: 'deep 1'
+                            }, {
+                                name: 'deep 2'
+                            }]
+                        },
+                        {name: 'child b'}
                     ]
                 },
                 {
-                    name: 'child 2',
+                    name: 'parent 2',
                     children: [
-                        {name: 'c'},
-                        {name: 'd'}
+                        {name: 'child c'},
+                        {name: 'child d'}
                     ]
                 },
                 {
-                    name: 'child 3',
+                    name: 'parent 3',
                     children: [
-                        {name: 'e'},
-                        {name: 'f'}
+                        {name: 'child e'},
+                        {name: 'child f'}
                     ]
                 },
-                {name: 'child 4'}]
+                {name: 'parent 4'}]
         }
     }
 });

@@ -2,10 +2,11 @@
     <ul v-if="level===0"
         class="treeview">
         <treeview
+                v-for="child in model.children"
                 :level="level+1"
                 :is-first-child="true"
                 :is-last-child="true"
-                :model="model">
+                :model="child">
         </treeview>
     </ul>
     <treeview-item v-else
@@ -52,11 +53,6 @@
 
     module.exports = Vue.extend({
         name: 'treeview',
-        ready: function () {
-            if (this.isRoot) {
-                this.isOpen = true;
-            }
-        },
         components: {
             'treeview-item': require('./treeview-item.vue')
         },
@@ -67,6 +63,7 @@
             },
             isFirstChild: Boolean,
             isLastChild: Boolean,
+            children: Array,
             model: Object
         },
         data: function () {
