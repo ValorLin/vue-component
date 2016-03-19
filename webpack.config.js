@@ -10,8 +10,8 @@ module.exports = {
         'index': path.join(__dirname, 'examples/index.js')
     },
     output: {
-        path: path.join(__dirname, 'examples'),
-        publicPath: 'examples',
+        path: path.join(__dirname, 'examples', 'dist'),
+        publicPath: '/examples/',
         filename: "[name]-bundle.js"
     },
     module: {
@@ -34,7 +34,7 @@ module.exports = {
             loader: "file-loader"
         }, {
             test: /\.(png|jpg|gif)(\?[a-z0-9]+)?$/,
-            loader: 'file-loader?name=imgs%2F[name].[hash].[ext]'
+            loader: 'file-loader?name=images%2F[name].[ext]'
         }]
     },
     postcss: [autoprefixer({browsers: ['last 2 versions', 'Android 2.3']})],

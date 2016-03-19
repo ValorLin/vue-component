@@ -6,7 +6,15 @@ new Vue({
     el: 'body',
     components: {
         'treeview': require('../treeview'),
-        'input-treeview': require('./treeview/input-treeview.vue')
+        'file-treeview': require('./treeview/file-treeview.vue')
+    },
+    methods: {
+        collapseAll: function () {
+            this.$refs.basicTreeview.collapseAll();
+        },
+        expandAll: function () {
+            this.$refs.basicTreeview.expandAll();
+        }
     },
     data: {
         tree: {
@@ -39,7 +47,8 @@ new Vue({
                         {name: 'child f'}
                     ]
                 },
-                {name: 'parent 4'}]
+                {name: 'parent 4'}
+            ]
         }
     }
 });

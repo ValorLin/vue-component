@@ -1,5 +1,8 @@
 <template>
-    <li :class="{bold: isFolder}">
+    <li :class="{
+            'bold': isFolder,
+            'open': isOpen
+        }">
         <slot name="indent"></slot>
         <span>{{model.name}}</span>
         <span v-if="isFolder" class="arrow" @click.stop="toggle">[{{isOpen ? '-' : '+'}}]</span>
@@ -9,6 +12,7 @@
 <script>
     var Vue = require('vue');
     module.exports = Vue.extend({
+        name: 'treeview-item',
         props: {
             toggle: Function,
             model: Object,

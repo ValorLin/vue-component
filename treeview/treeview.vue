@@ -12,7 +12,7 @@
     <treeview-item v-else
                    :model="model"
                    :level="level"
-                   :is-open="isOpen"
+                   :is-open.sync="isOpen"
                    :is-root="isRoot"
                    :is-folder="isFolder"
                    :is-first-child="isFirstChild"
@@ -22,7 +22,6 @@
               class="indent"
               v-for="i in level-1"></span>
         <ul slot="child"
-            :class="{'open':isOpen}"
             v-show="isOpen"
             v-if="isFolder">
             <treeview
@@ -50,11 +49,12 @@
 </style>
 <script>
     var Vue = require('vue');
+    var TreeviewItem = require('./treeview-item.vue');
 
-    module.exports = Vue.extend({
+    var Treeview = Vue.extend({
         name: 'treeview',
         components: {
-            'treeview-item': require('./treeview-item.vue')
+            'treeview-item': TreeviewItem
         },
         props: {
             level: {
@@ -85,9 +85,32 @@
                     this.isOpen = !this.isOpen;
                 }
             },
-            getIsLastChild: function () {
-
+            expandAll: function () {
+                this.isOpen = true;
+                this.$children.forEach(function (child) {
+                    if (child instanceof Treeview) {
+                        child.expandAll();
+                    } else if (child instanceof TreeviewItem) {
+                        if (child.$children.length > 0) {
+                            child.$children[0].expandAll();
+                        }
+                    }
+                });
+            },
+            collapseAll: function () {
+                this.isOpen = false;
+                this.$children.forEach(function (child) {
+                    if (child instanceof Treeview) {
+                        child.collapseAll();
+                    } else if (child instanceof TreeviewItem) {
+                        if (child.$children.length > 0) {
+                            child.$children[0].collapseAll();
+                        }
+                    }
+                });
             }
         }
     });
+
+    module.exports = Treeview;
 </script>
