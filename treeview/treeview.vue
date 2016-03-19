@@ -3,34 +3,36 @@
         class="treeview">
         <treeview
                 :level="level+1"
+                :is-first-child="true"
                 :is-last-child="true"
                 :model="model">
         </treeview>
     </ul>
-    <li v-else
-        :class="{'root': isRoot}">
-        <treeview-item :model="model"
-                       :level="level"
-                       :is-open="isOpen"
-                       :is-root="isRoot"
-                       :is-folder="isFolder"
-                       :is-first-child="isFirstChild"
-                       :is-last-child="isLastChild"
-                       :toggle="toggle">
-            <span slot="indent" v-for="i in level-1" class="indent"></span>
-        </treeview-item>
-        <ul :class="{'open':isOpen}"
+    <treeview-item v-else
+                   :model="model"
+                   :level="level"
+                   :is-open="isOpen"
+                   :is-root="isRoot"
+                   :is-folder="isFolder"
+                   :is-first-child="isFirstChild"
+                   :is-last-child="isLastChild"
+                   :toggle="toggle">
+        <span slot="indent"
+              class="indent"
+              v-for="i in level-1"></span>
+        <ul slot="child"
+            :class="{'open':isOpen}"
             v-show="isOpen"
             v-if="isFolder">
             <treeview
-                    v-for="childModel in model.children"
+                    v-for="child in model.children"
                     :level="level+1"
                     :is-first-child="$index===0"
                     :is-last-child="model.children && $index===(model.children.length - 1)"
-                    :model="childModel">
+                    :model="child">
             </treeview>
         </ul>
-    </li>
+    </treeview-item>
 </template>
 <style>
     .treeview,
@@ -85,6 +87,9 @@
                 if (this.isFolder) {
                     this.isOpen = !this.isOpen;
                 }
+            },
+            getIsLastChild: function () {
+
             }
         }
     });

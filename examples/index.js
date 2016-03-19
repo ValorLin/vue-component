@@ -1,5 +1,6 @@
 var Vue = require('vue');
 Vue.config.debug = true;
+Vue.config.async = false;
 
 new Vue({
     el: 'body',
@@ -9,16 +10,26 @@ new Vue({
     },
     data: {
         tree: {
-            name: 'root',
-
             children: [
-                {name: 'child 1'},
-                {name: 'child 2'},
                 {
-                    name: 'child 3',
+                    name: 'child 1',
                     children: [
                         {name: 'a'},
                         {name: 'b'}
+                    ]
+                },
+                {
+                    name: 'child 2',
+                    children: [
+                        {name: 'c'},
+                        {name: 'd'}
+                    ]
+                },
+                {
+                    name: 'child 3',
+                    children: [
+                        {name: 'e'},
+                        {name: 'f'}
                     ]
                 },
                 {name: 'child 4'}]

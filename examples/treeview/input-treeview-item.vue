@@ -1,15 +1,19 @@
 <template>
-    <div class="input-treeview-item"
-         :class="{bold: isFolder}"
-         @dblclick.stop="toggle">
-        <template v-for="i in level-1">
-            {{ i===1 ? '│' : ''}}
-            <span class="indent"></span>
-        </template>
-        {{ isRoot ? '' : isFirstChild ? '├' : isLastChild ? '└' : '├'}}
-        <input type="text" v-model="model.name">
-        {{ model.children && model.children.length > 0 && isOpen? '┐':''}}
-        <span v-if="isFolder" class="expand-handle" @click.stop="toggle">[{{isOpen ? '-' : '+'}}]</span></div>
+    <li>
+        <div class="input-treeview-item"
+             :class="{bold: isFolder}"
+             @dblclick.stop="toggle">
+            <template v-for="i in level-1">
+                {{ i===1 ? '│' : ''}}
+                <span class="indent"></span>
+            </template>
+            {{ isRoot ? '' : isFirstChild ? '├' : isLastChild ? '└' : '├'}}
+            <input type="text" v-model="model.name">
+            {{ model.children && model.children.length > 0 && isOpen? '┐':''}}
+            <span v-if="isFolder" class="expand-handle" @click.stop="toggle">[{{isOpen ? '-' : '+'}}]</span>
+        </div>
+        <slot name="child"></slot>
+    </li>
 </template>
 <style>
     .input-treeview-item {

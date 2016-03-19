@@ -1,9 +1,10 @@
 <template>
-    <div :class="{bold: isFolder}">
+    <li :class="{bold: isFolder}">
         <slot name="indent"></slot>
         <span>{{model.name}}</span>
         <span v-if="isFolder" class="arrow" @click.stop="toggle">[{{isOpen ? '-' : '+'}}]</span>
-    </div>
+        <slot name="child"></slot>
+    </li>
 </template>
 <script>
     var Vue = require('vue');
