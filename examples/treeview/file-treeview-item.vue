@@ -26,6 +26,8 @@
              * A customised toggle method with animation.
              */
             toggleWithAnimate: function () {
+                if(!this.isFolder) return;
+
                 var self = this;
                 var ulEl = this.$el.querySelector('ul');
                 var arrowEl = this.$el.querySelector('.arrow');
@@ -34,10 +36,6 @@
                 if (this.isOpen) {
                     var height = parseInt(getComputedStyle(ulEl).height);
                     // Hide
-                    dynamics.css(ulEl, {
-                        marginTop: 0,
-                        opacity: 1
-                    });
                     dynamics.animate(ulEl, {
                         marginTop: -height,
                         opacity: 0
