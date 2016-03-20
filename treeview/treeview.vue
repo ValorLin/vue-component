@@ -87,19 +87,17 @@
                 });
             },
             toggle: function (child) {
-                if (this.isFolder) {
-                    if (this.isOpen) {
-                        this.collapse();
-                    } else {
-                        this.expand();
-                    }
-                }
+                if (!this.isFolder) return;
+
+                this.isOpen ? this.collapse() : this.expand();
                 this.$dispatch('toggle', {
                     model: this.model,
                     isOpen: this.isOpen
                 });
             },
             expand: function () {
+                if (!this.isFolder) return;
+
                 this.isOpen = true;
                 this.$dispatch('expand', {
                     model: this.model
@@ -118,6 +116,8 @@
                 });
             },
             collapse: function () {
+                if (!this.isFolder) return;
+
                 this.isOpen = false;
                 this.$dispatch('collapse', {
                     model: this.model
