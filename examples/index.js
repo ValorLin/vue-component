@@ -12,14 +12,14 @@ new Vue({
         onTreeviewItemClick: function (e) {
             console.log('item-click', e);
         },
-        onTreeviewToggle: function (e) {
-            console.log('toggle', e);
+        onTreeviewItemToggle: function (e) {
+            console.log('item-toggle', e);
         },
-        onTreeviewExpand: function (e) {
-            console.log('expand', e);
+        onTreeviewItemExpand: function (e) {
+            console.log('item-expand', e);
         },
-        onTreeviewCollapse: function (e) {
-            console.log('collapse', e);
+        onTreeviewItemCollapse: function (e) {
+            console.log('item-collapse', e);
         },
         collapseAll: function () {
             this.$refs.basicTreeview.collapseAll();

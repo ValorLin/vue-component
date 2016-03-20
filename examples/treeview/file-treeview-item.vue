@@ -49,7 +49,7 @@
                     }, {
                         duration: duration
                     });
-                    this.$dispatch('collapse', {
+                    this.$dispatch('item-collapse', {
                         model: this.model
                     });
                 } else {
@@ -78,11 +78,11 @@
                             duration: duration
                         });
                     });
-                    this.$dispatch('expand', {
+                    this.$dispatch('item-expand', {
                         model: this.model
                     });
                 }
-                this.$dispatch('toggle', {
+                this.$dispatch('item-toggle', {
                     model: this.model,
                     isOpen: this.isOpen
                 });

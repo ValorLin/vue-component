@@ -90,7 +90,7 @@
                 if (!this.isFolder) return;
 
                 this.isOpen ? this.collapse() : this.expand();
-                this.$dispatch('toggle', {
+                this.$dispatch('item-toggle', {
                     model: this.model,
                     isOpen: this.isOpen
                 });
@@ -99,7 +99,7 @@
                 if (!this.isFolder) return;
 
                 this.isOpen = true;
-                this.$dispatch('expand', {
+                this.$dispatch('item-expand', {
                     model: this.model
                 });
             },
@@ -119,7 +119,7 @@
                 if (!this.isFolder) return;
 
                 this.isOpen = false;
-                this.$dispatch('collapse', {
+                this.$dispatch('item-collapse', {
                     model: this.model
                 });
             },
