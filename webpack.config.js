@@ -14,6 +14,9 @@ module.exports = {
         publicPath: '/examples/',
         filename: "[name]-bundle.js"
     },
+    resolve: {
+        modulesDirectories: ['.', 'node_modules']
+    },
     module: {
         loaders: [{
             test: /\.vue$/,

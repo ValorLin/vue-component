@@ -24,6 +24,11 @@
         border-left-color: #999;
         transform-origin: 4px 6px;
         margin-left: 5px;
+        visibility: hidden;
+    }
+
+    .treeview .file-treeview-item > .bold > .arrow {
+        visibility: visible;
     }
 
     .treeview .file-treeview-item > div {
@@ -34,7 +39,7 @@
 
 </style>
 <script>
-    var Treeview = require('../../treeview');
+    var Treeview = require('vue-component/treeview');
 
     module.exports = Treeview.extend({
         components: {

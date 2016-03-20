@@ -2,9 +2,9 @@
     <li class="file-treeview-item"
         :class="{'open': isOpen}"
         @dblclick.stop="toggleWithAnimate">
-        <div :class="{bold: isFolder}">
+        <div :class="{'bold': isFolder}">
             <slot name="indent"></slot>
-            <span v-visibility="isFolder" class="arrow" @click.stop="toggleWithAnimate"></span>
+            <span class="arrow" @click.stop="toggleWithAnimate" @dblclick.stop></span>
             <img class="icon" width="24" :src="model.icon || defaultIcon" alt="Folder">
             <span>{{model.name}}</span>
         </div>
@@ -14,28 +14,27 @@
 <script>
     var dynamics = require('dynamics.js');
     var Vue = require('vue');
-    var TreeviewItem = require('../../treeview/treeview-item.vue');
+    var TreeviewItem = require('vue-component/treeview/treeview-item.vue');
     var IMG_FILE = require('./file.png');
     var IMG_FOLDER = require('./folder.png');
 
     module.exports = TreeviewItem.extend({
-        ready: function () {
-        },
         methods: {
-            /**
-             * A customised toggle method with animation.
-             */
             toggleWithAnimate: function () {
-                if(!this.isFolder) return;
+                if (!this.isFolder) return;
 
                 var self = this;
                 var ulEl = this.$el.querySelector('ul');
                 var arrowEl = this.$el.querySelector('.arrow');
                 var duration = 250;
 
-                if (this.isOpen) {
-                    var height = parseInt(getComputedStyle(ulEl).height);
+                dynamics.stop(ulEl);
+                dynamics.stop(arrowEl);
+
+                if (this.isOpen && !this._isHidding) {
                     // Hide
+                    var height = parseInt(getComputedStyle(ulEl).height);
+                    this._isHidding = true;
                     dynamics.animate(ulEl, {
                         marginTop: -height,
                         opacity: 0
@@ -53,12 +52,17 @@
                 } else {
                     // Show
                     this.isOpen = true;
+                    this._isHidding = false;
                     this.$nextTick(function () {
-                        var height = parseInt(getComputedStyle(ulEl).height);
-                        dynamics.css(ulEl, {
-                            marginTop: -height,
-                            opacity: 0
-                        });
+                        var ulStyle = getComputedStyle(ulEl);
+                        var height = parseInt(ulStyle.height);
+                        var startMarginTop = parseInt(ulStyle.marginTop);
+                        if (!this._isHidding) {
+                            dynamics.css(ulEl, {
+                                marginTop: startMarginTop || -height,
+                                opacity: 0
+                            });
+                        }
                         dynamics.animate(ulEl, {
                             marginTop: 0,
                             opacity: 1
@@ -74,14 +78,15 @@
                 }
             }
         },
-        directives: {
-            'visibility': function (isVisible) {
-                this.el.style.visibility = isVisible ? 'visible' : 'hidden';
-            }
-        },
         computed: {
             defaultIcon: function () {
                 return this.isFolder ? IMG_FOLDER : IMG_FILE;
+            }
+        },
+        props: {
+            isChildVisible: {
+                type: Boolean,
+                default: false
             }
         }
     });
