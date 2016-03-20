@@ -1,7 +1,7 @@
 <template>
     <li class="file-treeview-item"
         :class="{'open': isOpen}"
-        @dblclick.stop="toggleWithAnimate">
+        @dblclick="toggleWithAnimate">
         <div :class="{'bold': isFolder}">
             <slot name="indent"></slot>
             <span class="arrow" @click.stop="toggleWithAnimate" @dblclick.stop></span>
@@ -49,6 +49,9 @@
                     }, {
                         duration: duration
                     });
+                    this.$dispatch('collapse', {
+                        model: this.model
+                    });
                 } else {
                     // Show
                     this.isOpen = true;
@@ -75,7 +78,14 @@
                             duration: duration
                         });
                     });
+                    this.$dispatch('expand', {
+                        model: this.model
+                    });
                 }
+                this.$dispatch('toggle', {
+                    model: this.model,
+                    isOpen: this.isOpen
+                });
             }
         },
         computed: {

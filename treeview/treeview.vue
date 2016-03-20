@@ -10,6 +10,7 @@
         </treeview>
     </ul>
     <treeview-item v-else
+                   @click.stop="onItemClick"
                    :model="model"
                    :level="level"
                    :is-open.sync="isOpen"
@@ -80,13 +81,32 @@
             }
         },
         methods: {
-            toggle: function () {
+            onItemClick: function () {
+                this.$dispatch('item-click', {
+                    model: this.model
+                });
+            },
+            toggle: function (child) {
                 if (this.isFolder) {
-                    this.isOpen = !this.isOpen;
+                    if (this.isOpen) {
+                        this.collapse();
+                    } else {
+                        this.expand();
+                    }
                 }
+                this.$dispatch('toggle', {
+                    model: this.model,
+                    isOpen: this.isOpen
+                });
+            },
+            expand: function () {
+                this.isOpen = true;
+                this.$dispatch('expand', {
+                    model: this.model
+                });
             },
             expandAll: function () {
-                this.isOpen = true;
+                this.expand();
                 this.$children.forEach(function (child) {
                     if (child instanceof Treeview) {
                         child.expandAll();
@@ -97,8 +117,14 @@
                     }
                 });
             },
-            collapseAll: function () {
+            collapse: function () {
                 this.isOpen = false;
+                this.$dispatch('collapse', {
+                    model: this.model
+                });
+            },
+            collapseAll: function () {
+                this.collapse();
                 this.$children.forEach(function (child) {
                     if (child instanceof Treeview) {
                         child.collapseAll();

@@ -35,14 +35,24 @@
         <h1>Examples</h1>
         <h2 id="treeview">Treeview</h2>
         <h4>Basic:</h4>
-        <treeview v-ref:basic-treeview :model="tree"></treeview>
+        <treeview v-ref:basic-treeview
+                  :model="tree"
+                  @toggle="onTreeviewToggle"
+                  @expand="onTreeviewExpand"
+                  @collapse="onTreeviewCollapse"
+                  @item-click="onTreeviewItemClick">
+        </treeview>
         <p>
             <button @click="collapseAll">Collapse All</button>
             <button @click="expandAll">Expand All</button>
         </p>
         <p>The component is very basic but easy to customise. You could almost do everything. Advanced example:</p>
         <h4>File Treeview:</h4>
-        <file-treeview  :model="tree"></file-treeview>
+        <file-treeview  :model="tree"
+                        @toggle="onTreeviewToggle"
+                        @expand="onTreeviewExpand"
+                        @collapse="onTreeviewCollapse"
+                        @item-click="onTreeviewItemClick"></file-treeview>
         <p> Checkout these files to learn how to customise your own treeview
         <ul>
             <li><code>/examples/treeview/file-treeview.vue</code></li>

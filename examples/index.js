@@ -9,6 +9,18 @@ new Vue({
         'file-treeview': require('./treeview/file-treeview.vue')
     },
     methods: {
+        onTreeviewItemClick: function (e) {
+            console.log('item-click', e);
+        },
+        onTreeviewToggle: function (e) {
+            console.log('toggle', e);
+        },
+        onTreeviewExpand: function (e) {
+            console.log('expand', e);
+        },
+        onTreeviewCollapse: function (e) {
+            console.log('collapse', e);
+        },
         collapseAll: function () {
             this.$refs.basicTreeview.collapseAll();
         },
