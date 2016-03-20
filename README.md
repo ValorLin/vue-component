@@ -10,14 +10,14 @@ Components for Vue.js
 ```html
 <treeview v-ref:basic-treeview
           :model="tree"
-          @toggle="onToggle"
-          @expand="onExpand"
-          @collapse="onCollapse"
+          @item-toggle="onItemToggle"
+          @item-expand="onItemExpand"
+          @item-collapse="onItemCollapse"
           @item-click="onItemClick">
 </treeview>
 ```
 #### JS
-```
+```js
 new Vue({
     el: 'body',
     components: {
@@ -27,13 +27,13 @@ new Vue({
         onItemClick: function (e) {
             console.log('item-click', e);
         },
-        onToggle: function (e) {
+        onItemToggle: function (e) {
             console.log('toggle', e);
         },
-        onExpand: function (e) {
+        onItemExpand: function (e) {
             console.log('expand', e);
         },
-        onCollapse: function (e) {
+        onItemCollapse: function (e) {
             console.log('toggle', e);
         },
         collapseAll: function () {
