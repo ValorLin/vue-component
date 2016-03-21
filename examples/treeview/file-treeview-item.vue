@@ -1,11 +1,15 @@
 <template>
     <li class="file-treeview-item"
-        :class="{'open': isOpen}"
-        @dblclick="toggleWithAnimate">
-        <div :class="{'bold': isFolder}">
+        :class="{
+            'expanded'  : model.expanded,
+            'selected'  : model.selected,
+            'collapsing': _isHiding
+        }"
+        @dblclick.stop="toggleWithAnimate">
+        <div :class="{'bold': this.isFolderItem(model)}">
             <slot name="indent"></slot>
             <span class="arrow" @click.stop="toggleWithAnimate" @dblclick.stop></span>
-            <img class="icon" width="24" :src="model.icon || defaultIcon" alt="Folder">
+            <img class="icon" width="20" :src="model.icon || defaultIcon" alt="Icon">
             <span>{{model.name}}</span>
         </div>
         <slot name="child"></slot>
@@ -19,9 +23,12 @@
     var IMG_FOLDER = require('./folder.png');
 
     module.exports = TreeviewItem.extend({
+        beforeCompiled: function () {
+            this.$set('model.selected', false);
+        },
         methods: {
             toggleWithAnimate: function () {
-                if (!this.isFolder) return;
+                if (!this.isFolderItem(this.model)) return;
 
                 var self = this;
                 var ulEl = this.$el.querySelector('ul');
@@ -31,17 +38,18 @@
                 dynamics.stop(ulEl);
                 dynamics.stop(arrowEl);
 
-                if (this.isOpen && !this._isHidding) {
+                if (this.model.expanded && !this._isHiding) {
                     // Hide
                     var height = parseInt(getComputedStyle(ulEl).height);
-                    this._isHidding = true;
+                    this._isHiding = true;
                     dynamics.animate(ulEl, {
                         marginTop: -height,
                         opacity: 0
                     }, {
                         duration: duration,
                         complete: function () {
-                            self.isOpen = false;
+                            self._isHiding = false;
+                            self.model.expanded = false;
                         }
                     });
                     dynamics.animate(arrowEl, {
@@ -49,18 +57,18 @@
                     }, {
                         duration: duration
                     });
-                    this.$dispatch('item-collapse', {
-                        model: this.model
+                    self.$dispatch('item-collapse', {
+                        model: self.model
                     });
                 } else {
                     // Show
-                    this.isOpen = true;
-                    this._isHidding = false;
+                    this.model.expanded = true;
+                    this._isHiding = false;
                     this.$nextTick(function () {
                         var ulStyle = getComputedStyle(ulEl);
                         var height = parseInt(ulStyle.height);
                         var startMarginTop = parseInt(ulStyle.marginTop);
-                        if (!this._isHidding) {
+                        if (!this._isHiding) {
                             dynamics.css(ulEl, {
                                 marginTop: startMarginTop || -height,
                                 opacity: 0
@@ -77,27 +85,24 @@
                         }, {
                             duration: duration
                         });
-                    });
-                    this.$dispatch('item-expand', {
-                        model: this.model
+                        this.$dispatch('item-expand', {
+                            model: self.model
+                        });
                     });
                 }
                 this.$dispatch('item-toggle', {
-                    model: this.model,
-                    isOpen: this.isOpen
+                    model: self.model,
+                    expanded: self.model.expanded
                 });
             }
         },
         computed: {
             defaultIcon: function () {
-                return this.isFolder ? IMG_FOLDER : IMG_FILE;
+                return this.isFolderItem(this.model) ? IMG_FOLDER : IMG_FILE;
             }
         },
         props: {
-            isChildVisible: {
-                type: Boolean,
-                default: false
-            }
+            _isHiding: Boolean
         }
     });
 </script>

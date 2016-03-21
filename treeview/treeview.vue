@@ -1,39 +1,29 @@
 <template>
-    <ul v-if="level===0"
-        class="treeview">
-        <treeview
-                v-for="child in model.children"
-                :level="level+1"
-                :is-first-child="true"
-                :is-last-child="true"
-                :model="child">
-        </treeview>
-    </ul>
-    <treeview-item v-else
-                   @click.stop="onItemClick"
-                   :model="model"
-                   :level="level"
-                   :is-open.sync="isOpen"
-                   :is-root="isRoot"
-                   :is-folder="isFolder"
-                   :is-first-child="isFirstChild"
-                   :is-last-child="isLastChild"
-                   :toggle="toggle">
-        <span slot="indent"
-              class="indent"
-              v-for="i in level-1"></span>
-        <ul slot="child"
-            v-show="isOpen"
-            v-if="isFolder">
-            <treeview
-                    v-for="child in model.children"
-                    :level="level+1"
-                    :is-first-child="$index===0"
-                    :is-last-child="model.children && $index===(model.children.length - 1)"
-                    :model="child">
+    <ul :class="{'treeview': isRoot(level)}">
+        <treeview-item v-for="child in model.children"
+                       @click.stop="onItemClick(child)"
+                       :model="child"
+                       :level="level+1"
+                       :index="$index"
+                       :expanded.sync="child.expanded"
+                       :first-child="isFirstItem($index)"
+                       :last-child="isLastItem($index)"
+                       :is-root="isRoot"
+                       :is-folder-item="isFolderItem"
+                       :toggle-item="toggleItem">
+            <span slot="indent"
+                  v-for="i in level"
+                  class="indent">
+            </span>
+            <treeview slot="child"
+                      v-if="isFolderItem(child)"
+                      v-show="child.expanded"
+                      :level="level+1"
+                      :root-visible="false"
+                      :model.sync="child">
             </treeview>
-        </ul>
-    </treeview-item>
+        </treeview-item>
+    </ul>
 </template>
 <style>
     .treeview,
@@ -54,6 +44,22 @@
 
     var Treeview = Vue.extend({
         name: 'treeview',
+        beforeCompile: function () {
+            if (this.rootVisible) {
+                if(typeof this.model.expanded === 'undefined'){
+                    Vue.set(this.model, 'expanded', true);
+                }
+                this.model = {children: [this.model]};
+            }
+
+            if (this.model.children) {
+                this.model.children.forEach(function (child) {
+                    if (typeof child.expanded === 'undefined') {
+                        Vue.set(child, 'expanded', false);
+                    }
+                });
+            }
+        },
         components: {
             'treeview-item': TreeviewItem
         },
@@ -62,78 +68,93 @@
                 type: Number,
                 default: 0
             },
-            isFirstChild: Boolean,
-            isLastChild: Boolean,
-            children: Array,
-            model: Object
-        },
-        data: function () {
-            return {
-                isOpen: false
-            }
-        },
-        computed: {
-            isRoot: function () {
-                return this.level === 1;
+            model: {
+                type: Object,
+                twoWay: true
             },
-            isFolder: function () {
-                return this.model.children && this.model.children.length > 0
-            }
+            rootVisible: Boolean
         },
         methods: {
-            onItemClick: function () {
+            isRoot: function (level) {
+                return level === 0;
+            },
+
+            isFirstItem: function (index) {
+                return index === 0;
+            },
+
+            isLastItem: function (index) {
+                if (this.model.children) {
+                    return index === this.model.children.length - 1;
+                } else {
+                    return false;
+                }
+            },
+
+            isFolderItem: function (model) {
+                return model.children && model.children.length > -1;
+            },
+
+            onItemClick: function (model) {
                 this.$dispatch('item-click', {
-                    model: this.model
+                    model: model
                 });
             },
-            toggle: function (child) {
-                if (!this.isFolder) return;
 
-                this.isOpen ? this.collapse() : this.expand();
+            toggleItem: function (model) {
+                model.expanded ? this.collapseItem(model) : this.expandItem(model);
                 this.$dispatch('item-toggle', {
-                    model: this.model,
-                    isOpen: this.isOpen
+                    model: model,
+                    expanded: model.expanded
                 });
             },
-            expand: function () {
-                if (!this.isFolder) return;
 
-                this.isOpen = true;
+            expandItem: function (model) {
+                if (!this.isFolderItem(model)) return;
+
+                model.expanded = true;
                 this.$dispatch('item-expand', {
-                    model: this.model
+                    model: model
                 });
             },
-            expandAll: function () {
-                this.expand();
-                this.$children.forEach(function (child) {
-                    if (child instanceof Treeview) {
-                        child.expandAll();
-                    } else if (child instanceof TreeviewItem) {
-                        if (child.$children.length > 0) {
-                            child.$children[0].expandAll();
-                        }
-                    }
-                });
-            },
-            collapse: function () {
-                if (!this.isFolder) return;
 
-                this.isOpen = false;
+            collapseItem: function (model) {
+                if (!this.isFolderItem(model)) return;
+
+                model.expanded = false;
                 this.$dispatch('item-collapse', {
-                    model: this.model
+                    model: model
                 });
             },
-            collapseAll: function () {
-                this.collapse();
-                this.$children.forEach(function (child) {
-                    if (child instanceof Treeview) {
-                        child.collapseAll();
-                    } else if (child instanceof TreeviewItem) {
-                        if (child.$children.length > 0) {
-                            child.$children[0].collapseAll();
-                        }
-                    }
-                });
+
+            expandAll: function (model) {
+                var self = this;
+                model = model || this.model;
+                if (this.isFolderItem(model)) {
+                    model.children.forEach(function (child) {
+                        self.expandItem(child);
+                        self.expandAll(child);
+                    });
+                }
+            },
+
+            collapseAll: function (model) {
+                var self = this;
+                model = model || this.model;
+                if (this.isFolderItem(model)) {
+                    model.children.forEach(function (child) {
+                        self.collapseItem(child);
+                        self.collapseAll(child);
+                    });
+                }
+            },
+
+            getRoot: function () {
+                var target = this;
+                while (!this.isRoot(target.level)) {
+                    target = target.$parent;
+                }
+                return target;
             }
         }
     });

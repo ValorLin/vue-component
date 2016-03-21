@@ -9,7 +9,8 @@ Components for Vue.js
 
 ```html
 <treeview v-ref:basic-treeview
-          :model="tree"
+          :model.sync="tree"
+          :root-visible="true"
           @item-toggle="onItemToggle"
           @item-expand="onItemExpand"
           @item-collapse="onItemCollapse"
@@ -45,38 +46,43 @@ new Vue({
     },
     data: {
         tree: {
-        	  rootVisible
-            children: [
-                {
-                    name: 'parent 1',
+            name: 'root',
+            children: [{
+                name: 'parent 1',
+                expanded: true,
+                children: [{
+                    name: 'child a',
                     children: [
-                        {
-                            name: 'child a',
-                            children: [{
-                                name: 'deep 1'
-                            }, {
-                                name: 'deep 2'
-                            }]
-                        },
-                        {name: 'child b'}
+                        {name: 'deep 1'},
+                        {name: 'deep 2'}
                     ]
-                },
-                {
-                    name: 'parent 2',
+                }, {
+                    name: 'child b',
+                    expanded: true,
                     children: [
-                        {name: 'child c'},
-                        {name: 'child d'}
+                        {name: 'deep 3'},
+                        {name: 'deep 4'}
                     ]
-                },
-                {
-                    name: 'parent 3',
-                    children: [
-                        {name: 'child e'},
-                        {name: 'child f'}
-                    ]
-                },
-                {name: 'parent 4'}
-            ]
+                }]
+            }, {
+                name: 'parent 2',
+                children: [
+                    {name: 'child c'},
+                    {name: 'child d'}
+                ]
+            }, {
+                name: 'parent 3',
+                children: [
+                    {name: 'child e'},
+                    {name: 'child f'}
+                ]
+            }, {
+                name: 'parent 4',
+                children: [
+                    {name: 'child g'},
+                    {name: 'child h'}
+                ]
+            }]
         }
     }
 });

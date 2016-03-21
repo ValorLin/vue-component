@@ -1,11 +1,11 @@
 <template>
     <li :class="{
-            'bold': isFolder,
-            'open': isOpen
+            'bold': isFolderItem(model),
+            'expanded': model.expanded
         }">
         <slot name="indent"></slot>
         <span>{{model.name}}</span>
-        <span v-if="isFolder" class="arrow" @click.stop="toggle">[{{isOpen ? '-' : '+'}}]</span>
+        <span v-if="isFolderItem(model)" class="arrow" @click.stop="toggleItem(this.model)">[{{model.expanded ? '-' : '+'}}]</span>
         <slot name="child"></slot>
     </li>
 </template>
@@ -14,13 +14,15 @@
     module.exports = Vue.extend({
         name: 'treeview-item',
         props: {
-            toggle: Function,
+            toggleItem: Function,
+            isFolderItem: Function,
+            isRoot: Function,
             model: Object,
-            isOpen: Boolean,
-            isRoot: Boolean,
-            isFirstChild: Boolean,
-            isLastChild: Boolean,
-            isFolder: Boolean,
+            expanded: Boolean,
+            root: Boolean,
+            firstChild: Boolean,
+            lastChild: Boolean,
+            folder: Boolean,
             level: Number
         }
     });

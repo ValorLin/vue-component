@@ -30,6 +30,45 @@ new Vue({
     },
     data: {
         tree: {
+            name: 'root',
+            children: [{
+                name: 'parent 1',
+                expanded: true,
+                children: [{
+                    name: 'child a',
+                    children: [
+                        {name: 'deep 1'},
+                        {name: 'deep 2'}
+                    ]
+                }, {
+                    name: 'child b',
+                    expanded: true,
+                    children: [
+                        {name: 'deep 3'},
+                        {name: 'deep 4'}
+                    ]
+                }]
+            }, {
+                name: 'parent 2',
+                children: [
+                    {name: 'child c'},
+                    {name: 'child d'}
+                ]
+            }, {
+                name: 'parent 3',
+                children: [
+                    {name: 'child e'},
+                    {name: 'child f'}
+                ]
+            }, {
+                name: 'parent 4',
+                children: [
+                    {name: 'child g'},
+                    {name: 'child h'}
+                ]
+            }]
+        },
+        files: {
             children: [
                 {
                     name: 'parent 1',
@@ -40,6 +79,8 @@ new Vue({
                                 name: 'deep 1'
                             }, {
                                 name: 'deep 2'
+                            }, {
+                                name: 'deep 3'
                             }]
                         },
                         {name: 'child b'}
