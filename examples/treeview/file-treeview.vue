@@ -91,7 +91,6 @@
                     }
 
                     for (var i = 0; i < visibleItemEls.length; i++) {
-                        console.log(visibleItemEls[i], i);
                         if (i % 2 !== 0) {
                             visibleItemEls[i].classList.add('odd');
                         } else {

@@ -7,11 +7,11 @@ var lessExtractor = ExtractTextPlugin.extract("css?sourceMap!postcss!less?source
 module.exports = {
     devtool: '#eval',
     entry: {
-        'index': path.join(__dirname, 'examples/index.js')
+        'index': __dirname + '/examples/index.js'
     },
     output: {
-        path: path.join(__dirname, 'examples', 'dist'),
-        publicPath: '/examples/dist/',
+        path: __dirname + '/examples/dist/',
+        publicPath: '/dist/',
         filename: "[name]-bundle.js"
     },
     resolve: {
@@ -37,12 +37,12 @@ module.exports = {
             loader: "file-loader"
         }, {
             test: /\.(png|jpg|gif)(\?[a-z0-9]+)?$/,
-            loader: 'file-loader?name=images%2F[name].[ext]'
+            loader: 'file-loader?name=images/[name].[ext]'
         }]
     },
     postcss: [autoprefixer({browsers: ['last 2 versions', 'Android 2.3']})],
     plugins: [
         //new webpack.optimize.UglifyJsPlugin(),
-        new ExtractTextPlugin("examples/[name].css")
+        //new ExtractTextPlugin("examples/[name].css")
     ]
 };

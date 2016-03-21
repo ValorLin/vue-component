@@ -4,7 +4,7 @@
   "description": "Components for Vue.js",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack-dev-server --inline --hot --config webpack.config.js"
+    "dev": "webpack-dev-server --content-base examples/ --inline --hot --config webpack.config.js"
   },
   "repository": {
     "type": "git",
