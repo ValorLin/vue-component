@@ -12,6 +12,13 @@
         overflow: hidden;
     }
 
+    .treeview li > div {
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        padding-right: 5px;
+    }
+
     .treeview .file-treeview-item > div > * {
         vertical-align: middle;
         line-height: 25px;

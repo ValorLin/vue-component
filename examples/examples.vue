@@ -35,7 +35,7 @@
     module.exports = {
         components: {
             'treeview': require('../treeview'),
-            'file-treeview': require('./treeview/file-treeview.vue')
+            'file-treeview': require('../file-treeview')
         },
         methods: {
             onTreeviewItemClick: function (e) {
