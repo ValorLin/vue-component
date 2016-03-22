@@ -7,11 +7,11 @@ var lessExtractor = ExtractTextPlugin.extract("css?sourceMap!postcss!less?source
 module.exports = {
     devtool: '#eval',
     entry: {
-        'index': __dirname + '/examples/index.js'
+        'index': './examples/index.js'
     },
     output: {
-        path: __dirname + '/examples/dist/',
-        publicPath: '/dist/',
+        path: path.resolve(__dirname, './examples/dist'),
+        publicPath: '/examples/dist/',
         filename: "[name]-bundle.js"
     },
     resolve: {
@@ -28,16 +28,12 @@ module.exports = {
             test: /\.less$/,
             loader: lessExtractor
         }, {
-            // the url-loader uses DataUrls.
-            // the file-loader emits files.
-            test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-            loader: "url-loader?limit=10000&minetype=application/font-woff"
-        }, {
-            test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-            loader: "file-loader"
-        }, {
-            test: /\.(png|jpg|gif)(\?[a-z0-9]+)?$/,
-            loader: 'file-loader?name=images/[name].[ext]'
+            test: /\.(png|jpg|gif|svg)$/,
+            loader: 'url',
+            query: {
+                limit: 10000,
+                name: '[name].[ext]?[hash]'
+            }
         }]
     },
     postcss: [autoprefixer({browsers: ['last 2 versions', 'Android 2.3']})],
