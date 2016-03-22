@@ -1,6 +1,6 @@
 {
   "name": "vue-component",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Components for Vue.js",
   "main": "index.js",
   "scripts": {
@@ -33,7 +33,7 @@
     "webpack-dev-server": "^1.14.1"
   },
   "dependencies": {
-    "dynamics.js": ">0.0.5",
+    "dynamics.js": "0.0.9",
     "vue": "^1.0.0"
   }
 }
