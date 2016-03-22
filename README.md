@@ -1,9 +1,10 @@
 # vue-component
-This project is under developing. Please **DO NOT** use it in your production environment.
-
-If you have any idea about the project, just open an issue.
 
 Components for Vue.js
+
+This project is under developing. ``**DO NOT** use it in your production environment.
+
+If you have any idea about the project, just open an issue.
 
 [DEMO](https://weilao.github.io/vue-component/examples)
 

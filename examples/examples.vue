@@ -15,7 +15,7 @@
             <button @click="collapseAll">Collapse All</button>
             <button @click="expandAll">Expand All</button>
         </p>
-        <p>The component is very basic but easy to customise. You could almost do everything. Advanced example:</p>
+        <p>The component is very basic but easy to customize. You could almost do everything. Advanced example:</p>
         <h4>File Treeview:</h4>
         <file-treeview :model.sync="files"
                        @item-toggle="onTreeviewItemToggle"
