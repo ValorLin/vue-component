@@ -104,7 +104,7 @@
                 this.deselectOthers(this.getRoot().model, model);
                 this.selectItem(model);
                 this.$dispatch('item-click', {
-                    model: this.model
+                    model: model
                 });
             },
 

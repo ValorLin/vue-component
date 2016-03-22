@@ -1,6 +1,6 @@
 <template>
     <ul :class="{'treeview': isRoot(level)}">
-        <treeview-item v-for="child in model.children"
+        <treeview-item v-for="child in _model.children"
                        @click.stop="onItemClick(child)"
                        :model="child"
                        :level="level+1"
@@ -46,14 +46,16 @@
         name: 'treeview',
         beforeCompile: function () {
             if (this.rootVisible) {
-                if(typeof this.model.expanded === 'undefined'){
+                if (typeof this.model.expanded === 'undefined') {
                     Vue.set(this.model, 'expanded', true);
                 }
-                this.model = {children: [this.model]};
+                this._model = {children: [this.model]};
+            } else {
+                this._model = this.model;
             }
 
-            if (this.model.children) {
-                this.model.children.forEach(function (child) {
+            if (this._model.children) {
+                this._model.children.forEach(function (child) {
                     if (typeof child.expanded === 'undefined') {
                         Vue.set(child, 'expanded', false);
                     }
@@ -68,10 +70,8 @@
                 type: Number,
                 default: 0
             },
-            model: {
-                type: Object,
-                twoWay: true
-            },
+            model: Object,
+            _model: Object,
             rootVisible: Boolean
         },
         methods: {
@@ -84,8 +84,8 @@
             },
 
             isLastItem: function (index) {
-                if (this.model.children) {
-                    return index === this.model.children.length - 1;
+                if (this._model.children) {
+                    return index === this._model.children.length - 1;
                 } else {
                     return false;
                 }
@@ -129,7 +129,7 @@
 
             expandAll: function (model) {
                 var self = this;
-                model = model || this.model;
+                model = model || this._model;
                 if (this.isFolderItem(model)) {
                     model.children.forEach(function (child) {
                         self.expandItem(child);
@@ -140,7 +140,7 @@
 
             collapseAll: function (model) {
                 var self = this;
-                model = model || this.model;
+                model = model || this._model;
                 if (this.isFolderItem(model)) {
                     model.children.forEach(function (child) {
                         self.collapseItem(child);
