@@ -4,7 +4,7 @@
         <h2 id="treeview">Treeview</h2>
         <h4>Basic:</h4>
         <treeview v-ref:basic-treeview
-                  :model.sync="tree"
+                  :model="tree"
                   :root-visible="true"
                   @item-toggle="onTreeviewItemToggle"
                   @item-expand="onTreeviewItemExpand"
@@ -17,7 +17,7 @@
         </p>
         <p>The component is very basic but easy to customize. You could almost do everything. Advanced example:</p>
         <h4>File Treeview:</h4>
-        <file-treeview :model.sync="files"
+        <file-treeview :model="files"
                        @item-toggle="onTreeviewItemToggle"
                        @item-expand="onTreeviewItemExpand"
                        @item-collapse="onTreeviewItemCollapse"
@@ -29,13 +29,26 @@
             <li><code>/examples/treeview/file-treeview-item.vue</code></li>
         </ul>
         </p>
+        <h2>Accordion</h2>
+        <div class="accordion">
+            <template v-for="child in accordion.children">
+                <h3 @click="child.expanded=!child.expanded">{{child.name}} - {{child.expanded}}</h3>
+                <collapse :expanded="child.expanded">
+                    <p>{{child.name}}</p>
+                </collapse>
+            </template>
+        </div>
+        <h2>Editable</h2>
+        <editable :model="editable.text"><span>{{editable.text}}2</span></editable>
     </div>
 </template>
 <script>
     module.exports = {
         components: {
             'treeview': require('../treeview'),
-            'file-treeview': require('../file-treeview')
+            'file-treeview': require('../file-treeview'),
+            'collapse': require('../collapse'),
+            'editable': require('../editable')
         },
         methods: {
             onTreeviewItemClick: function (e) {
@@ -132,6 +145,16 @@
                         },
                         {name: 'parent 4'}
                     ]
+                },
+                accordion: {
+                    children: [
+                        {name: 'accordion item 1', expanded: false},
+                        {name: 'accordion item 2', expanded: false},
+                        {name: 'accordion item 3', expanded: false}
+                    ]
+                },
+                editable: {
+                    text: 'Double click here to edit'
                 }
             };
         }

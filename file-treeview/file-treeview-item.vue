@@ -3,14 +3,14 @@
         :class="{
             'expanded'  : model.expanded,
             'selected'  : model.selected,
-            'collapsing': _isHiding
+            'collapsing': _hidding
         }"
-        @dblclick.stop="toggleWithAnimate">
+        @dblclick.stop="_editing=true">
         <div :class="{'bold': this.isFolderItem(model)}">
             <slot name="indent"></slot>
             <span class="arrow" @click.stop="toggleWithAnimate" @dblclick.stop></span>
             <img class="icon" width="20" :src="model.icon || defaultIcon" alt="Icon">
-            <span>{{model.name}}</span>
+            <editable :model="model.name" :editing.sync="_editing"></editable>
         </div>
         <slot name="child"></slot>
     </li>
@@ -23,6 +23,9 @@
     var IMG_FOLDER = require('./folder.png');
 
     module.exports = TreeviewItem.extend({
+        components: {
+            'editable': require('../editable')
+        },
         beforeCompiled: function () {
             this.$set('model.selected', false);
         },
@@ -38,17 +41,17 @@
                 dynamics.stop(ulEl);
                 dynamics.stop(arrowEl);
 
-                if (this.model.expanded && !this._isHiding) {
+                if (this.model.expanded && !this._hidding) {
                     // Hide
                     var height = parseInt(getComputedStyle(ulEl).height);
-                    this._isHiding = true;
+                    this._hidding = true;
                     dynamics.animate(ulEl, {
                         marginTop: -height,
                         opacity: 0
                     }, {
                         duration: duration,
                         complete: function () {
-                            self._isHiding = false;
+                            self._hidding = false;
                             self.model.expanded = false;
                         }
                     });
@@ -63,12 +66,12 @@
                 } else {
                     // Show
                     this.model.expanded = true;
-                    this._isHiding = false;
+                    this._hidding = false;
                     this.$nextTick(function () {
                         var ulStyle = getComputedStyle(ulEl);
                         var height = parseInt(ulStyle.height);
                         var startMarginTop = parseInt(ulStyle.marginTop);
-                        if (!this._isHiding) {
+                        if (!this._hidding) {
                             dynamics.css(ulEl, {
                                 marginTop: startMarginTop || -height,
                                 opacity: 0
@@ -102,7 +105,8 @@
             }
         },
         props: {
-            _isHiding: Boolean
-        }
+            _hidding: Boolean,
+            _editing: Boolean
+        }   
     });
 </script>
