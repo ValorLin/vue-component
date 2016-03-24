@@ -10,7 +10,7 @@
             <slot name="indent"></slot>
             <span class="arrow" @click.stop="toggleWithAnimate" @dblclick.stop></span>
             <img class="icon" width="20" :src="model.icon || defaultIcon" alt="Icon">
-            <editable :text="model.name" :editing.sync="_editing"></editable>
+            <editable :text.sync="model.name" :editing.sync="_editing"></editable>
         </div>
         <slot name="child"></slot>
     </li>
