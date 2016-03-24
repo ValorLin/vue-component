@@ -8,7 +8,8 @@
                @focus="$event.target.select()"
                @blur="endEdit"
                @keydown.esc="cancelEdit"
-               @keypress.enter="endEdit">
+               @keypress.enter="endEdit"
+               @keydown.stop>
         <span v-else>{{text}}</span>
     </span>
 </template>
