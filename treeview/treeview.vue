@@ -155,6 +155,10 @@
                     target = target.$parent;
                 }
                 return target;
+            },
+
+            getRootModel: function () {
+                return this.getRoot()._model;
             }
         }
     });

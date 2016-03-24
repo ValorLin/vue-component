@@ -3,14 +3,14 @@
         :class="{
             'expanded'  : model.expanded,
             'selected'  : model.selected,
-            'collapsing': _hidding
+            'collapsing': _hiding
         }"
         @dblclick.stop="_editing=true">
         <div :class="{'bold': this.isFolderItem(model)}">
             <slot name="indent"></slot>
             <span class="arrow" @click.stop="toggleWithAnimate" @dblclick.stop></span>
             <img class="icon" width="20" :src="model.icon || defaultIcon" alt="Icon">
-            <editable :model="model.name" :editing.sync="_editing"></editable>
+            <editable :text="model.name" :editing.sync="_editing"></editable>
         </div>
         <slot name="child"></slot>
     </li>
@@ -41,17 +41,17 @@
                 dynamics.stop(ulEl);
                 dynamics.stop(arrowEl);
 
-                if (this.model.expanded && !this._hidding) {
+                if (this.model.expanded && !this._hiding) {
                     // Hide
                     var height = parseInt(getComputedStyle(ulEl).height);
-                    this._hidding = true;
+                    this._hiding = true;
                     dynamics.animate(ulEl, {
                         marginTop: -height,
                         opacity: 0
                     }, {
                         duration: duration,
                         complete: function () {
-                            self._hidding = false;
+                            self._hiding = false;
                             self.model.expanded = false;
                         }
                     });
@@ -66,12 +66,12 @@
                 } else {
                     // Show
                     this.model.expanded = true;
-                    this._hidding = false;
+                    this._hiding = false;
                     this.$nextTick(function () {
                         var ulStyle = getComputedStyle(ulEl);
                         var height = parseInt(ulStyle.height);
                         var startMarginTop = parseInt(ulStyle.marginTop);
-                        if (!this._hidding) {
+                        if (!this._hiding) {
                             dynamics.css(ulEl, {
                                 marginTop: startMarginTop || -height,
                                 opacity: 0
@@ -105,7 +105,7 @@
             }
         },
         props: {
-            _hidding: Boolean,
+            _hiding: Boolean,
             _editing: Boolean
         }   
     });

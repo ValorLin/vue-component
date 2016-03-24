@@ -18,6 +18,7 @@
         <p>The component is very basic but easy to customize. You could almost do everything. Advanced example:</p>
         <h4>File Treeview:</h4>
         <file-treeview :model="files"
+                       :root-visible="true"
                        @item-toggle="onTreeviewItemToggle"
                        @item-expand="onTreeviewItemExpand"
                        @item-collapse="onTreeviewItemCollapse"

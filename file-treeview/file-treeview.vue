@@ -108,7 +108,7 @@
             },
 
             onItemClick: function (model) {
-                this.deselectOthers(this.getRoot().model, model);
+                this.deselectOthers(this.getRootModel(), model);
                 this.selectItem(model);
                 this.$dispatch('item-click', {
                     model: model
