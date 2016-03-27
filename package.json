@@ -1,6 +1,6 @@
 {
   "name": "vue-component",
-  "version": "0.2.7",
+  "version": "0.2.8",
   "description": "Components for Vue.js",
   "main": "index.js",
   "scripts": {
