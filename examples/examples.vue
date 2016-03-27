@@ -18,7 +18,6 @@
         <p>The component is very basic but easy to customize. You could almost do everything. Advanced example:</p>
         <h4>File Treeview:</h4>
         <file-treeview :model="files"
-                       :root-visible="true"
                        @item-toggle="onTreeviewItemToggle"
                        @item-expand="onTreeviewItemExpand"
                        @item-collapse="onTreeviewItemCollapse"
@@ -26,21 +25,21 @@
         </file-treeview>
         <p> Checkout these files to learn how to customise your own treeview
         <ul>
-            <li><code>/examples/treeview/file-treeview.vue</code></li>
-            <li><code>/examples/treeview/file-treeview-item.vue</code></li>
+            <li><code>/file-treeview/file-treeview.vue</code></li>
+            <li><code>/file-treeview/file-treeview-item.vue</code></li>
         </ul>
         </p>
+        <h2>Editable</h2>
+        <editable :text.sync="editable.text"></editable>
         <h2>Accordion</h2>
         <div class="accordion">
             <template v-for="child in accordion.children">
-                <h3 @click="child.expanded=!child.expanded">{{child.name}} - {{child.expanded}}</h3>
-                <collapse :expanded="child.expanded">
+                <h3 @click="child.expanded=!child.expanded">{{child.name}}</h3>
+                <div v-if="child.expanded">
                     <p>{{child.name}}</p>
-                </collapse>
+                </div>
             </template>
         </div>
-        <h2>Editable</h2>
-        <editable :model="editable.text"><span>{{editable.text}}2</span></editable>
     </div>
 </template>
 <script>
@@ -48,7 +47,6 @@
         components: {
             'treeview': require('../treeview'),
             'file-treeview': require('../file-treeview'),
-            'collapse': require('../collapse'),
             'editable': require('../editable')
         },
         methods: {
