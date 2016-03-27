@@ -1,7 +1,7 @@
 <template>
     <ul :class="{'treeview': isRoot(level)}">
         <treeview-item v-for="child in _model.children"
-                       @click.stop="onItemClick(child)"
+                       :class="'level-'+(level+1)"
                        :model="child"
                        :level="level+1"
                        :index="$index"
@@ -10,7 +10,8 @@
                        :last-child="isLastItem($index)"
                        :is-root="isRoot"
                        :is-folder-item="isFolderItem"
-                       :toggle-item="toggleItem">
+                       :toggle-item="toggleItem"
+                       @click.stop="onItemClick(child)">
             <span slot="indent"
                   v-for="i in level"
                   class="indent">
