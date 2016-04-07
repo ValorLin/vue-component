@@ -40,22 +40,24 @@
 </style>
 <script>
     export default {
-        ready: function () {
+        ready () {
             document.body.appendChild(this.$el);
         },
-        props: {
-            active: Boolean
+        data () {
+            return {
+                active: false
+            };
         },
         methods: {
-            show: function () {
+            show () {
                 this.active = true;
                 this.$dispatch('show');
             },
-            hide: function () {
+            hide () {
                 this.active = false;
                 this.$dispatch('hide');
             },
-            onContainerClick: function () {
+            onContainerClick () {
                 this.hide();
             }
         }

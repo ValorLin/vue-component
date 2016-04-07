@@ -40,11 +40,21 @@
     }
 </style>
 <script>
-    var Vue = require('vue');
-    var TreeviewItem = require('./treeview-item.vue');
+    import Vue from 'vue'
+    import TreeviewItem from './treeview-item.vue'
 
-    var Treeview = Vue.extend({
+    export default Vue.extend({
         name: 'treeview',
+        components: {TreeviewItem},
+        props: {
+            level: {
+                type: Number,
+                default: 0
+            },
+            model: Object,
+            _model: Object,
+            rootVisible: Boolean
+        },
         beforeCompile: function () {
             if (this.rootVisible) {
                 if (typeof this.model.expanded === 'undefined') {
@@ -63,28 +73,16 @@
                 });
             }
         },
-        components: {
-            'treeview-item': TreeviewItem
-        },
-        props: {
-            level: {
-                type: Number,
-                default: 0
-            },
-            model: Object,
-            _model: Object,
-            rootVisible: Boolean
-        },
         methods: {
-            isRoot: function (level) {
+            isRoot (level) {
                 return level === 0;
             },
 
-            isFirstItem: function (index) {
+            isFirstItem (index) {
                 return index === 0;
             },
 
-            isLastItem: function (index) {
+            isLastItem (index) {
                 if (this._model.children) {
                     return index === this._model.children.length - 1;
                 } else {
@@ -92,17 +90,17 @@
                 }
             },
 
-            isFolderItem: function (model) {
+            isFolderItem (model) {
                 return model.children && model.children.length > -1;
             },
 
-            onItemClick: function (model) {
+            onItemClick (model) {
                 this.$dispatch('item-click', {
                     model: model
                 });
             },
 
-            toggleItem: function (model) {
+            toggleItem (model) {
                 model.expanded ? this.collapseItem(model) : this.expandItem(model);
                 this.$dispatch('item-toggle', {
                     model: model,
@@ -110,7 +108,7 @@
                 });
             },
 
-            expandItem: function (model) {
+            expandItem (model) {
                 if (!this.isFolderItem(model)) return;
 
                 model.expanded = true;
@@ -119,7 +117,7 @@
                 });
             },
 
-            collapseItem: function (model) {
+            collapseItem (model) {
                 if (!this.isFolderItem(model)) return;
 
                 model.expanded = false;
@@ -128,7 +126,7 @@
                 });
             },
 
-            expandAll: function (model) {
+            expandAll (model) {
                 var self = this;
                 model = model || this._model;
                 if (this.isFolderItem(model)) {
@@ -139,7 +137,7 @@
                 }
             },
 
-            collapseAll: function (model) {
+            collapseAll (model) {
                 var self = this;
                 model = model || this._model;
                 if (this.isFolderItem(model)) {
@@ -150,7 +148,7 @@
                 }
             },
 
-            getRoot: function () {
+            getRoot () {
                 var target = this;
                 while (!this.isRoot(target.level)) {
                     target = target.$parent;
@@ -158,11 +156,9 @@
                 return target;
             },
 
-            getRootModel: function () {
+            getRootModel () {
                 return this.getRoot()._model;
             }
         }
     });
-
-    module.exports = Treeview;
 </script>

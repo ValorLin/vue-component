@@ -10,8 +10,9 @@
     </li>
 </template>
 <script>
-    var Vue = require('vue');
-    module.exports = Vue.extend({
+    import Vue from 'vue'
+
+    export default Vue.extend({
         name: 'treeview-item',
         props: {
             toggleItem: Function,

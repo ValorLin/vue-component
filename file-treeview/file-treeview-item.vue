@@ -16,21 +16,20 @@
     </li>
 </template>
 <script>
-    var dynamics = require('dynamics.js');
-    var Vue = require('vue');
-    var TreeviewItem = require('../treeview/treeview-item.vue');
-    var IMG_FILE = require('./file.png');
-    var IMG_FOLDER = require('./folder.png');
+    import Vue from 'vue'
+    import dynamics from 'dynamics.js'
+    import Editable from '../editable'
+    import TreeviewItem from '../treeview/treeview-item.vue'
+    import IMG_FILE from './file.png'
+    import IMG_FOLDER from './folder.png'
 
-    module.exports = TreeviewItem.extend({
-        components: {
-            'editable': require('../editable')
-        },
-        beforeCompiled: function () {
+    export default TreeviewItem.extend({
+        components: {Editable},
+        beforeCompiled () {
             this.$set('model.selected', false);
         },
         methods: {
-            toggleWithAnimate: function () {
+            toggleWithAnimate () {
                 if (!this.isFolderItem(this.model)) return;
 
                 var self = this;
@@ -100,13 +99,13 @@
             }
         },
         computed: {
-            defaultIcon: function () {
+            defaultIcon () {
                 return this.isFolderItem(this.model) ? IMG_FOLDER : IMG_FILE;
             }
         },
         props: {
             _hiding: Boolean,
             _editing: Boolean
-        }   
+        }
     });
 </script>

@@ -2,8 +2,8 @@
     <basic-dialog>
         <slot></slot>
         <footer>
-            <button @click="onCancel()">{{cancel}}</button>
-            <button @click="onOK()">{{ok}}</button>
+            <button @click="onCancel">{{cancel}}</button>
+            <button @click="onOK">{{ok}}</button>
         </footer>
     </basic-dialog>
 </template>
@@ -33,12 +33,12 @@
             hide () {
                 this.$children[0].hide();
             },
-            onOK: function () {
+            onOK () {
                 this.hide();
                 this._resolve();
                 this.$dispatch('ok');
             },
-            onCancel: function () {
+            onCancel () {
                 this.hide();
                 this._reject();
                 this.$dispatch('cancel');

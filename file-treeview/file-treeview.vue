@@ -62,26 +62,26 @@
     }
 </style>
 <script>
-    var Vue = require('vue');
-    var Treeview = require('../treeview');
+    import Vue from 'vue'
+    import Treeview from '../treeview'
+    import TreeviewItem from './file-treeview-item.vue'
 
-    module.exports = Treeview.extend({
-        ready: function () {
-            if (this.isRoot(this.level)) {
-                this.updateItemOdd();
-            }
-        },
+    export default Treeview.extend({
         components: {
-            // override treeview-item component
-            'treeview-item': require('./file-treeview-item.vue')
+            TreeviewItem // override treeview-item component
         },
         events: {
             'item-toggle': function () {
                 this.updateItemOdd();
             }
         },
+        ready () {
+            if (this.isRoot(this.level)) {
+                this.updateItemOdd();
+            }
+        },
         methods: {
-            updateItemOdd: function () {
+            updateItemOdd () {
                 this.$nextTick(function () {
                     var rootEl = this.getRoot().$el;
                     var itemEls = rootEl.querySelectorAll('.expanded>ul>li, :scope>li');
@@ -107,7 +107,7 @@
                 });
             },
 
-            onItemClick: function (model) {
+            onItemClick (model) {
                 this.deselectOthers(this.getRootModel(), model);
                 this.selectItem(model);
                 this.$dispatch('item-click', {
@@ -115,21 +115,21 @@
                 });
             },
 
-            selectItem: function (model) {
+            selectItem (model) {
                 Vue.set(model, 'selected', true);
                 this.$dispatch('item-select', {
                     model: model
                 });
             },
 
-            deselectItem: function (model) {
+            deselectItem (model) {
                 Vue.set(model, 'selected', false);
                 this.$dispatch('item-deselect', {
                     model: model
                 });
             },
 
-            deselectOthers: function (model, excluded) {
+            deselectOthers (model, excluded) {
                 var self = this;
                 if (this.isFolderItem(model)) {
                     model.children.forEach(function (child) {
@@ -141,7 +141,7 @@
                 }
             },
 
-            deselectAll: function (model) {
+            deselectAll (model) {
                 this.deselectOthers(model);
             }
         },

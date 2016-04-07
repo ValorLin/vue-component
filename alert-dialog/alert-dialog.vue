@@ -2,7 +2,7 @@
     <basic-dialog>
         <slot></slot>
         <footer>
-            <button @click="onOK()">{{ok}}</button>
+            <button @click="onOK">{{ok}}</button>
         </footer>
     </basic-dialog>
 </template>
@@ -27,7 +27,7 @@
             hide () {
                 this.$children[0].hide();
             },
-            onOK: function () {
+            onOK () {
                 this.hide();
                 this._resolve();
                 this.$dispatch('ok');

@@ -40,28 +40,28 @@
 
 </style>
 <script>
-    var Vue = require("vue");
-    module.exports = {
-        directives: {
-            'focus': require('vue-focus').focus
-        },
-        methods: {
-            startEdit: function () {
-                this.editing = true;
-                this._originText = this.text;
-            },
-            cancelEdit: function () {
-                this.text = this._originText;
-                this.endEdit();
-            },
-            endEdit: function () {
-                this.editing = false;
-            }
-        },
+    import Vue from 'vue'
+    import {focus} from 'vue-focus'
+
+    export default {
+        directives: {focus},
         props: {
             text: String,
             editing: Boolean,
             _originText: String
+        },
+        methods: {
+            startEdit () {
+                this.editing = true;
+                this._originText = this.text;
+            },
+            cancelEdit () {
+                this.text = this._originText;
+                this.endEdit();
+            },
+            endEdit () {
+                this.editing = false;
+            }
         }
     };
 </script>
