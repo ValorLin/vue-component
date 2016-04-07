@@ -34,7 +34,8 @@
         <button @click="showBasicDialog">Show Dialog</button>
         <basic-dialog v-ref:basic-dialog>
             <h4>Title</h4>
-            <p>Hello. This is an information message. You can click outside or in the cancel button to close it.</p>
+            <p>Hello. This is an information message.</p>
+            <p>You can click outside or in the cancel button to close it.</p>
             <footer>
                 <button @click="onBasicDialogButtonClick">Some Button</button>
             </footer>

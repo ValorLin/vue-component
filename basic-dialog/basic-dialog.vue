@@ -24,7 +24,7 @@
     .dialog-container .dialog {
         max-width: 640px;
         min-width: 320px;
-        padding: 1em;
+        padding: 1em 2em;
         box-sizing: border-box;
         margin: auto;
         background-color: #fff;
