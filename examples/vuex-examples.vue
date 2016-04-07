@@ -31,15 +31,15 @@
         </p>
         <h2>Editable</h2>
         <editable :text="editable.text" @change="onEditableChange"></editable>
-        <h2>Accordion</h2>
-        <div class="accordion">
-            <template v-for="child in accordion.children">
-                <h3 @click="child.expanded=!child.expanded">{{child.name}}</h3>
-                <div v-if="child.expanded">
-                    <p>{{child.name}}</p>
-                </div>
-            </template>
-        </div>
+        <!--<h2>Accordion</h2>-->
+        <!--<div class="accordion">-->
+            <!--<template v-for="child in accordion.children">-->
+                <!--<h3 @click="child.expanded=!child.expanded">{{child.name}}</h3>-->
+                <!--<div v-if="child.expanded">-->
+                    <!--<p>{{child.name}}</p>-->
+                <!--</div>-->
+            <!--</template>-->
+        <!--</div>-->
     </div>
 </template>
 <script type="text/babel">
@@ -57,7 +57,6 @@
         },
         filters: {
             cloneDeep: obj => extend(true, {}, obj)
-
         },
         methods: {
             onTreeviewItemClick: function (e) {
@@ -98,12 +97,12 @@
                 this.modifyEditable(e.target.value);
             }
         },
-
-        computed: {
-            accordion: function () {
-                return extend(true, {}, this._accordion);
-            }
-        },
+//
+//        computed: {
+//            accordion: function () {
+//                return extend(true, {}, this._accordion);
+//            }
+//        },
         vuex: {actions, getters}
     };
 </script>

@@ -63,7 +63,7 @@
 </style>
 <script>
     var Vue = require('vue');
-    var Treeview = require('vue-component/treeview');
+    var Treeview = require('../treeview');
 
     module.exports = Treeview.extend({
         ready: function () {

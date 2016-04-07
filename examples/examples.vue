@@ -2,7 +2,7 @@
     <div class="content guide with-sidebar">
         <h1>Examples</h1>
         <h2 id="treeview">Treeview</h2>
-        <h4>Basic:</h4>
+        <h3>Basic:</h3>
         <treeview v-ref:basic-treeview
                   :model="tree"
                   :root-visible="true"
@@ -16,30 +16,48 @@
             <button @click="expandAll">Expand All</button>
         </p>
         <p>The component is very basic but easy to customize. You could almost do everything. Advanced example:</p>
-        <h4>File Treeview:</h4>
+        <h3>File Treeview:</h3>
         <file-treeview :model="files"
                        @item-toggle="onTreeviewItemToggle"
                        @item-expand="onTreeviewItemExpand"
                        @item-collapse="onTreeviewItemCollapse"
                        @item-click="onTreeviewItemClick">
         </file-treeview>
-        <p> Checkout these files to learn how to customise your own treeview
+        <p> Checkout these files to learn how to customise your own treeview </p>
         <ul>
             <li><code>/file-treeview/file-treeview.vue</code></li>
             <li><code>/file-treeview/file-treeview-item.vue</code></li>
         </ul>
-        </p>
-        <h2>Editable</h2>
+
+        <h2 id="dialog">Dialog</h2>
+        <h3>Basic Dialog</h3>
+        <button @click="showBasicDialog">Show Dialog</button>
+        <basic-dialog v-ref:basic-dialog>
+            <h4>Title</h4>
+            <p>Hello. This is an information message. You can click outside or in the cancel button to close it.</p>
+            <footer>
+                <button @click="onBasicDialogButtonClick">Some Button</button>
+            </footer>
+        </basic-dialog>
+        <h3>Alert Dialog</h3>
+        <button @click="showAlertDialog">Show AlertDialog</button>
+        <alert-dialog v-ref:alert-dialog
+                      ok="Got it"
+                      @ok="onAlertDialogOk">
+            <p>AlertDialog only have one button.</p>
+        </alert-dialog>
+        <h3>Confirm Dialog</h3>
+        <button @click="showConfirmDialog">Show ConfirmDialog</button>
+        <confirm-dialog v-ref:confirm-dialog
+                        ok="yes"
+                        @ok="onConfirmDialogOk"
+                        cancel="NOOOOO!"
+                        @cancel="onConfirmDialogCancel">
+            <p>Are you sure?</p>
+        </confirm-dialog>
+
+        <h2 id="editable">Editable</h2>
         <editable :text.sync="editable.text"></editable>
-        <h2>Accordion</h2>
-        <div class="accordion">
-            <template v-for="child in accordion.children">
-                <h3 @click="child.expanded=!child.expanded">{{child.name}}</h3>
-                <div v-if="child.expanded">
-                    <p>{{child.name}}</p>
-                </div>
-            </template>
-        </div>
     </div>
 </template>
 <script>
@@ -47,26 +65,76 @@
         components: {
             'treeview': require('../treeview'),
             'file-treeview': require('../file-treeview'),
-            'editable': require('../editable')
+            'editable': require('../editable'),
+            'basic-dialog': require('../basic-dialog'),
+            'alert-dialog': require('../alert-dialog'),
+            'confirm-dialog': require('../confirm-dialog'),
         },
         methods: {
+            /**
+             * <basic-treeview>
+             */
             onTreeviewItemClick: function (e) {
-                console.log('item-click', e);
+                console.log('treeview event: item-click', e);
             },
             onTreeviewItemToggle: function (e) {
-                console.log('item-toggle', e);
+                console.log('treeview event: item-toggle', e);
             },
             onTreeviewItemExpand: function (e) {
-                console.log('item-expand', e);
+                console.log('treeview event: item-expand', e);
             },
             onTreeviewItemCollapse: function (e) {
-                console.log('item-collapse', e);
+                console.log('treeview event: item-collapse', e);
             },
             collapseAll: function () {
                 this.$refs.basicTreeview.collapseAll();
             },
             expandAll: function () {
                 this.$refs.basicTreeview.expandAll();
+            },
+            /**
+             * <basic-dialog>
+             */
+            showBasicDialog: function () {
+                this.$refs.basicDialog.show();
+            },
+            hideBasicDialog: function () {
+                this.$refs.basicDialog.hide();
+            },
+            onBasicDialogButtonClick: function () {
+                console.log('basic-dialog: Some Button click');
+                this.$refs.basicDialog.hide();
+            },
+            /**
+             * <alert-dialog>
+             */
+            showAlertDialog: function () {
+                this.$refs.alertDialog
+                        .show()
+                        .then(function () {
+                            console.log('alert-dialog ok callback');
+                        });
+            },
+            onAlertDialogOk: function () {
+                console.log('alert-dialog event: ok');
+            },
+            /**
+             * <confirm-dialog>
+             */
+            showConfirmDialog: function () {
+                this.$refs.confirmDialog
+                        .show()
+                        .then(function () {
+                            console.log('confirm-dialog ok callback');
+                        }, function () {
+                            console.log('confirm-dialog cancel callback');
+                        });
+            },
+            onConfirmDialogOk: function () {
+                console.log('confirm-dialog event: ok');
+            },
+            onConfirmDialogCancel: function () {
+                console.log('confirm-dialog event: cancel');
             }
         },
         data: function () {

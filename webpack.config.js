@@ -7,13 +7,14 @@ var lessExtractor = ExtractTextPlugin.extract("css?sourceMap!postcss!less?source
 module.exports = {
     devtool: '#eval-sourcemap',
     entry: {
-        'index': './examples/index.js',
-        'vuex-index': './examples/vuex-index.js'
+        'vue-component': './index.js',
+        'example': './examples/index.js',
+        'vuex-example': './examples/vuex-index.js'
     },
     output: {
-        path: path.resolve(__dirname, './examples/dist'),
-        publicPath: '/examples/dist/',
-        filename: "[name]-bundle.js"
+        path: path.resolve(__dirname, './dist'),
+        publicPath: '/dist/',
+        filename: "[name].js"
     },
     resolve: {
         modulesDirectories: ['.', 'node_modules']

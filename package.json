@@ -1,6 +1,6 @@
 {
   "name": "vue-component",
-  "version": "0.2.8",
+  "version": "0.3.0",
   "description": "Components for Vue.js",
   "main": "index.js",
   "scripts": {
@@ -10,7 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/weilao/vue-component.git"
   },
-  "author": "",
+  "author": "Weilao",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/weilao/vue-component/issues"

@@ -18,7 +18,7 @@
 <script>
     var dynamics = require('dynamics.js');
     var Vue = require('vue');
-    var TreeviewItem = require('vue-component/treeview/treeview-item.vue');
+    var TreeviewItem = require('../treeview/treeview-item.vue');
     var IMG_FILE = require('./file.png');
     var IMG_FOLDER = require('./folder.png');
 
