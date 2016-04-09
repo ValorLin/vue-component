@@ -23,13 +23,9 @@ module.exports = {
         loaders: [
             {test: /\.js$/, loaders: ['babel'], exclude: [/node_modules/]},
             {test: /\.vue$/, loader: 'vue'},
-            {test: /\.css$/, loader: cssExtractor},
-            {test: /\.less$/, loader: lessExtractor},
-            {
-                test: /\.(png|jpg|gif|svg)$/,
-                loader: 'url',
-                query: {limit: 10000, name: '[name].[ext]?[hash]'}
-            }
+            {test: /\.css$/, loader: 'style-loader!css-loader'},
+            {test: /\.png$/, loader: "url-loader?limit=100000"},
+            {test: /\.jpg$/, loader: "file-loader"}
         ]
     },
     babel: {"presets": ["es2015"]},

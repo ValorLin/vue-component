@@ -35,7 +35,7 @@
         <basic-dialog v-ref:basic-dialog>
             <h4>Title</h4>
             <p>Hello. This is an information message.</p>
-            <p>You can click outside or in the cancel button to close it.</p>
+            <p>You can click outside or in the button to close it.</p>
             <footer>
                 <button @click="onBasicDialogButtonClick">Some Button</button>
             </footer>
@@ -50,18 +50,30 @@
         <h3>Confirm Dialog</h3>
         <button @click="showConfirmDialog">Show ConfirmDialog</button>
         <confirm-dialog v-ref:confirm-dialog
-                        ok="yes"
-                        @ok="onConfirmDialogOk"
+                        ok="Yes"
                         cancel="NOOOOO!"
+                        @ok="onConfirmDialogOk"
                         @cancel="onConfirmDialogCancel">
             <p>Are you sure?</p>
         </confirm-dialog>
+        <h3>Prompt Dialog</h3>
+        <button @click="showPromptDialog">Show PromptDialog</button>
+        <prompt-dialog v-ref:prompt-dialog
+                       ok="OK"
+                       cancel="Cancel"
+                       placeholder="balabalabala"
+                       @ok="onPromptDialogOk"
+                       @cancel="onPromptDialogCancel">
+            <p>Are you sure?</p>
+        </prompt-dialog>
 
         <h2 id="editable">Editable</h2>
         <editable :text.sync="editable.text"></editable>
     </div>
 </template>
 <script>
+//    import theme from '../theme/osx.css'
+
     module.exports = {
         components: {
             'treeview': require('../treeview'),
@@ -70,6 +82,7 @@
             'basic-dialog': require('../basic-dialog'),
             'alert-dialog': require('../alert-dialog'),
             'confirm-dialog': require('../confirm-dialog'),
+            'prompt-dialog': require('../prompt-dialog')
         },
         methods: {
             /**
@@ -136,6 +149,24 @@
             },
             onConfirmDialogCancel: function () {
                 console.log('confirm-dialog event: cancel');
+            },
+            /**
+             * <prompt-dialog>
+             */
+            showPromptDialog: function () {
+                this.$refs.promptDialog
+                        .show()
+                        .then(function (inputText) {
+                            console.log('prompt-dialog ok callback. text:', inputText);
+                        }, function () {
+                            console.log('prompt-dialog cancel callback');
+                        });
+            },
+            onPromptDialogOk: function (e) {
+                console.log('prompt-dialog event: ok', e);
+            },
+            onPromptDialogCancel: function () {
+                console.log('prompt-dialog event: cancel');
             }
         },
         data: function () {

@@ -1,8 +1,9 @@
 <template>
     <div v-show="active"
          class="dialog-container"
+         tabindex="0"
          @click.self="onContainerClick">
-        <div class="dialog">
+        <div v-if="active" class="dialog">
             <slot>dialog</slot>
         </div>
     </div>
@@ -39,9 +40,19 @@
     }
 </style>
 <script>
+    import Vue from 'vue'
+
+    var keyCodes = Vue.directive('on').keyCodes;
+
     export default {
         ready () {
+            var self = this;
             document.body.appendChild(this.$el);
+            window.addEventListener('keyup', function (e) {
+                if (e.keyCode === keyCodes.esc) {
+                    self.hide();
+                }
+            });
         },
         data () {
             return {
