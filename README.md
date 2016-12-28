@@ -2,7 +2,9 @@
 
 Components for Vue.js
 
-This project is under developing. ``**DO NOT** use it in your production environment.
+This project is no active anymore but it's still a good example of how to write vue compoents. 
+
+**DO NOT** use it in your production environment.
 
 If you have any idea about the project, just open an issue.
 
