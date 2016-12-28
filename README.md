@@ -1,10 +1,10 @@
 # vue-component
 
-Components for Vue.js
+Components for Vue.js v1.0
 
-This project is no active anymore but it's still a good example of how to write vue compoents. 
+This project is no active anymore but it's still a good example (basic-dialog、alert-dialog) of how to write vue compoents (Still not the best way although).
 
-**DO NOT** use it in your production environment.
+**DO NOT** use it in your production environment, but feel free to fork.
 
 If you have any idea about the project, just open an issue.
 
